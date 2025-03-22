@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookshop Chatbot</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-image: url('https://i.etsystatic.com/25357998/r/il/67a8c8/3509167682/il_fullxfull.3509167682_ctvd.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        #chatbox {
+            width: 320px;
+            height: 400px;
+            border: 2px solid white;
+            padding: 10px;
+            overflow-y: scroll;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark background for chatbox */
+            margin: 0 auto;
+            border-radius: 10px;
+            text-align: left;
+            color: white;
+        }
+        button {
+            width: 300px;
+            padding: 10px;
+            margin: 5px auto;
+            border: none;
+            background-color: #7e5a9b;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+        }
+        button:hover {
+            background-color: #684985;
+        }
+        h2, h3 {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Once Upon a Book Bookshop</h2>
+    <h3>A cozy haven where stories come to life</h3>
+    <h3>📍37 St Patrick's St, Centre, Cork</h3>
+    <div id="chatbox">
+        <p><strong>Bot:</strong> Welcome! How can I help you?</p>
+    </div>
+
+    <button onclick="sendMessage('What books do you have?')">What books do you have?</button>
+    <button onclick="sendMessage('What are your store hours?')">Store hours</button>
+    <button onclick="askGenre()">Book recommendations</button>
+
+    <script>
+        function sendMessage(message) {
+            var chatbox = document.getElementById("chatbox");
+            chatbox.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
+            chatbox.innerHTML += "<p><strong>Bot:</strong> " + getBotResponse(message) + "</p>";
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function askGenre() {
+            var chatbox = document.getElementById("chatbox");
+            chatbox.innerHTML += "<p><strong>Bot:</strong> What genre would you like a recommendation for?</p>";
+
+            var genres = ["Fiction", "Non-fiction", "Classic", "Fantasy", "Science Fiction"];
+            genres.forEach(function(genre) {
+                chatbox.innerHTML += `<button onclick="recommendBook('${genre}')">${genre}</button>`;
+            });
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function recommendBook(genre) {
+            var chatbox = document.getElementById("chatbox");
+            var recommendations = {
+                "Fiction": ["The Great Gatsby by F. Scott Fitzgerald", "To Kill a Mockingbird by Harper Lee", "1984 by George Orwell", "Pride and Prejudice by Jane Austen", "The Catcher in the Rye by J.D. Salinger"],
+                "Non-fiction": ["Sapiens by Yuval Noah Harari", "Educated by Tara Westover", "Becoming by Michelle Obama", "The Immortal Life of Henrietta Lacks by Rebecca Skloot", "The Wright Brothers by David McCullough"],
+                "Classic": ["Moby-Dick by Herman Melville", "War and Peace by Leo Tolstoy", "The Odyssey by Homer", "Jane Eyre by Charlotte Brontë", "Wuthering Heights by Emily Brontë"],
+                "Fantasy": ["The Hobbit by J.R.R. Tolkien", "A Game of Thrones by George R.R. Martin", "The Name of the Wind by Patrick Rothfuss", "The Lies of Locke Lamora by Scott Lynch", "The Way of Kings by Brandon Sanderson"],
+                "Science Fiction": ["Dune by Frank Herbert", "Neuromancer by William Gibson", "Ender's Game by Orson Scott Card", "The Left Hand of Darkness by Ursula K. Le Guin", "The Martian by Andy Weir"]
+            };
+
+            var randomBook = recommendations[genre][Math.floor(Math.random() * 5)];
+            chatbox.innerHTML += "<p><strong>Bot:</strong> I recommend: " + randomBook + "</p>";
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function getBotResponse(message) {
+            const responses = {
+                "What books do you have?": "We have fiction, non-fiction, classic books, and bestsellers.",
+                "What are your store hours?": "We are open from 9 AM to 7 PM Monday to Saturday."
+            };
+            return responses[message] || "I'm not sure how to respond to that.";
+        }
+    </script>
+
+</body>
+</html>
